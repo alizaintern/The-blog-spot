@@ -36,3 +36,123 @@
     transform: rotate(360deg);
   }
 }
+
+body {
+  text-align: center;
+}
+
+.form {
+  border: 2px solid rgb(125, 154, 165);
+  border-radius: 15px;
+  box-shadow: 10px 10px 10px rgb(135, 168, 179);
+  background-color: rgb(255, 255, 255);
+  width: 30%;
+  text-align: center;
+  margin: auto;
+  margin-top:10%;
+  padding-top: 5%;
+ 
+}
+input {
+  margin-top: 2%;
+  margin-bottom: 2%;
+  padding: 1%;
+  border: 2px solid rgb(0, 0, 0);
+  border-radius: 5px;
+  height: 5%;
+}
+button {
+  margin-top: 5%;
+  padding: 1%;
+  margin-left: 2%;
+  margin-bottom: 10%;
+  background-color: rgb(152, 150, 150);
+  border: 2px solid rgb(152, 150, 150);
+
+  border-radius: 5px;
+}
+.signup-btn:hover, .signin-btn:hover {
+  background-color: rgb(111, 111, 111);
+}
+.signup-btn,.signin-btn {
+  border: none;
+  border-radius: 5px;
+  width:30%;
+  background-color:rgb(95, 93, 93);
+  margin-top: 0%;
+  padding: 1%;
+}
+
+
+/*this is Feed file*/
+.createPost {
+  text-align: left;
+  margin-left: 10%;
+  display: block;
+}
+.title {
+  height: 20%;
+}
+.body {
+  width: 20%;
+}
+.create-btn {
+  background-color: rgb(152, 150, 150);
+  border: 2px solid rgb(152, 150, 150);
+  margin-left: 0%;
+  border-radius: 5px;
+}
+h1 {
+  text-align: center;
+  background-color: black;
+  color:white;
+  text-align: center;
+  padding-top: 2%;
+  padding-bottom: 2%;
+  margin: 0%;
+}
+h2 {
+  font-size: 1.5rem;
+  text-transform: capitalize;
+}
+.post {
+  border: 2px solid black;
+  border-radius: 5px;
+  margin-bottom: 5%;
+ 
+}
+.posts {
+  background-color: white;
+  padding-left: 10%;
+  padding-right: 10%;
+  padding-top: 2%;
+  padding-bottom: 2%;
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-bottom: 2%;
+  text-align: left;
+}
+.editPost {
+  text-align: left;
+}
+.createPost{
+  margin-top:5%;
+}
+.title{
+  width:30%;
+ 
+}
+.postTitle{
+  background-color: black;
+  margin:0%;
+  padding-bottom: 2%;
+  color:white;
+}
+.postBody{
+  padding-left: 2%;
+  text-transform: capitalize;
+
+}
+.commentInput{
+  margin-left: 2%;
+}
