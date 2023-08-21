@@ -1,6 +1,5 @@
-
 import React, { useState, useEffect } from "react";
-import { useLocation,useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 interface Post {
   userId: any;
@@ -17,18 +16,17 @@ const Feed: React.FC = () => {
   const [newPostBody, setNewPostBody] = useState<string>("");
   const [newComment, setNewComment] = useState<string>(""); // State for new comment
   const location = useLocation();
-  const navigation=useNavigate();
+  const navigation = useNavigate();
   const currentId = location.state?.id;
-  const userName= location.state?.name;
- console.log('username '+userName);
- console.log('userid '+currentId);
+  const userName = location.state?.name;
+  console.log("username " + userName);
+  console.log("userid " + currentId);
 
   const editPost = (post: Post) => {
     setEditModePost(post);
   };
 
   useEffect(() => {
-    
     fetch("https://jsonplaceholder.typicode.com/posts")
       .then((response) => response.json())
       .then((data) => {
@@ -44,9 +42,9 @@ const Feed: React.FC = () => {
   }, []);
 
   const createPost = () => {
-    if(!userName){
-      alert('No user logged in ');
-      navigation('/LoginForm');
+    if (!userName) {
+      alert("No user logged in ");
+      navigation("/LoginForm");
     }
     if (newPostTitle && newPostBody) {
       const newPost: Post = {
@@ -63,9 +61,9 @@ const Feed: React.FC = () => {
   };
 
   const deletePost = (postId: number, User_Id: any) => {
-    if(!userName){
-      alert('No user logged in ');
-      navigation('/LoginForm');
+    if (!userName) {
+      alert("No user logged in ");
+      navigation("/LoginForm");
     }
     if (
       User_Id === currentId ||
@@ -77,9 +75,9 @@ const Feed: React.FC = () => {
   };
 
   const saveEdit = (editedPost: Post) => {
-    if(!userName){
-      alert('No user logged in ');
-      navigation('/LoginForm');
+    if (!userName) {
+      alert("No user logged in ");
+      navigation("/LoginForm");
     }
     const updatedPosts = posts.map((post) =>
       post.id === editedPost.id ? editedPost : post
@@ -102,8 +100,13 @@ const Feed: React.FC = () => {
     }
   };
 
-  const editComment = (post: Post, commentIndex: number, editedComment: string|null) => {
-    if (editedComment !== null) { // Check if editedComment is not null
+  const editComment = (
+    post: Post,
+    commentIndex: number,
+    editedComment: string | null
+  ) => {
+    if (editedComment !== null) {
+      // Check if editedComment is not null
       const updatedComments = post.comments.map((comment, index) =>
         index === commentIndex ? editedComment : comment
       );
@@ -119,14 +122,14 @@ const Feed: React.FC = () => {
   };
 
   const deleteComment = (post: Post, commentIndex: number) => {
-    const updatedComments = post.comments.filter((comment, index) => index !== commentIndex);
+    const updatedComments = post.comments.filter(
+      (comment, index) => index !== commentIndex
+    );
     const updatedPost: Post = {
       ...post,
       comments: updatedComments,
     };
-    const updatedPosts = posts.map((p) =>
-      p.id === post.id ? updatedPost : p
-    );
+    const updatedPosts = posts.map((p) => (p.id === post.id ? updatedPost : p));
     setPosts(updatedPosts);
   };
 
@@ -155,9 +158,8 @@ const Feed: React.FC = () => {
           Create Post
         </button>
       </div>
-      <h1 style={{marginBottom:'5%'}}>Posts</h1>
+      <h1 style={{ marginBottom: "5%" }}>Posts</h1>
       <div className="posts">
-      
         {posts.map((post) => (
           <div key={post.id} className="post">
             {editModePost && editModePost.id === post.id ? (
@@ -194,28 +196,49 @@ const Feed: React.FC = () => {
               <>
                 <h2 className="postTitle">{post.title}</h2>
                 <p className="postBody">{post.body}</p>
-                <h3 style={{paddingLeft:'2%'}}>Comments</h3>
+                <h3 style={{ paddingLeft: "2%" }}>Comments</h3>
                 {post.comments.map((comment, index) => (
                   <div key={index} className="comment">
-                    <div style={{paddingLeft:'2%'}}>
-                    <p >{comment} : ({userName})</p>
-                    
+                    <div style={{ paddingLeft: "2%" }}>
+                      <p>
+                        {comment} : ({userName})
+                      </p>
                     </div>
-                    
-                    <button  style={{marginTop:'0%' , marginBottom:'0%'}} onClick={() => editComment(post, index, prompt("Edit comment:", comment))}>
+
+                    <button
+                      style={{ marginTop: "0%", marginBottom: "0%" }}
+                      onClick={() =>
+                        editComment(
+                          post,
+                          index,
+                          prompt("Edit comment:", comment)
+                        )
+                      }
+                    >
                       Edit
                     </button>
-                    <button style={{marginTop:'0%' , marginBottom:'0%'}} onClick={() => deleteComment(post, index)}>Delete</button>
+                    <button
+                      style={{ marginTop: "0%", marginBottom: "0%" }}
+                      onClick={() => deleteComment(post, index)}
+                    >
+                      Delete
+                    </button>
                   </div>
                 ))}
                 <div className="add-comment">
-                  <input className="commentInput"
+                  <input
+                    className="commentInput"
                     type="text"
                     placeholder="Add a comment"
                     value={newComment}
                     onChange={(e) => setNewComment(e.target.value)}
                   />
-                  <button style={{marginBottom:'0%'}}onClick={() => addComment(post)}>Comment</button>
+                  <button
+                    style={{ marginBottom: "0%" }}
+                    onClick={() => addComment(post)}
+                  >
+                    Comment
+                  </button>
                 </div>
                 <button onClick={() => deletePost(post.id, post.userId)}>
                   Delete Post

@@ -1,7 +1,5 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-
 
 interface Record {
   id: any;
@@ -56,16 +54,12 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ records, setRecords }) => {
       setRecords([...records, newRecord]);
       console.log(records);
       setFormData({ id: 0, username: "", email: "", password: "" });
-      navigate('./LoginForm');
+      navigate("./LoginForm");
     }
   };
 
   return (
-    <form
-      className="form"
-      
-      onSubmit={handleSubmit}
-    >
+    <form className="form" onSubmit={handleSubmit}>
       <h2>Sign Up</h2>
       <div>
         <label>Username</label>
@@ -101,8 +95,9 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ records, setRecords }) => {
       <button className="signup-btn" type="submit" onChange={handleSubmit}>
         Sign Up
       </button>
-      <button className='signin-btn' onClick={() => navigate("./LoginForm")}>Login</button>
-      
+      <button className="signin-btn" onClick={() => navigate("./LoginForm")}>
+        Login
+      </button>
     </form>
   );
 };
