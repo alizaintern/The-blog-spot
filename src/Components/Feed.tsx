@@ -6,7 +6,7 @@ interface Post {
   id: number;
   title: string;
   body: string;
-  comments: string[]; // Array to store comments
+  comments: string[]; 
 }
 
 const Feed: React.FC = () => {
@@ -14,7 +14,7 @@ const Feed: React.FC = () => {
   const [editModePost, setEditModePost] = useState<Post | null>(null);
   const [newPostTitle, setNewPostTitle] = useState<string>("");
   const [newPostBody, setNewPostBody] = useState<string>("");
-  const [newComment, setNewComment] = useState<string>(""); // State for new comment
+  const [newComment, setNewComment] = useState<string>(""); 
   const location = useLocation();
   const navigation = useNavigate();
   const currentId = location.state?.id;
@@ -32,7 +32,7 @@ const Feed: React.FC = () => {
       .then((data) => {
         const postsWithComments = data.map((post: Post) => ({
           ...post,
-          comments: [], // Initialize comments array
+          comments: [], 
         }));
         setPosts(postsWithComments);
       })
@@ -52,7 +52,7 @@ const Feed: React.FC = () => {
         id: posts.length + 1,
         title: newPostTitle,
         body: newPostBody,
-        comments: [], // Initialize comments array
+        comments: [], 
       };
       setPosts([...posts, newPost]);
       setNewPostTitle("");
@@ -90,7 +90,7 @@ const Feed: React.FC = () => {
     if (newComment) {
       const updatedPost: Post = {
         ...post,
-        comments: [...post.comments, newComment], // Add the new comment to the array
+        comments: [...post.comments, newComment], 
       };
       const updatedPosts = posts.map((p) =>
         p.id === post.id ? updatedPost : p
@@ -106,7 +106,7 @@ const Feed: React.FC = () => {
     editedComment: string | null
   ) => {
     if (editedComment !== null) {
-      // Check if editedComment is not null
+     
       const updatedComments = post.comments.map((comment, index) =>
         index === commentIndex ? editedComment : comment
       );
