@@ -1,20 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-
-interface Post {
-  userId: any;
-  id: number;
-  title: string;
-  body: string;
-  comments: string[]; 
-}
+import Post from "types/post";
+import userId from "constants/userId";
+import { isAuthorized } from "utils/authorized";
+import { fetchPosts } from "api/posts";
 
 const Feed: React.FC = () => {
   const [posts, setPosts] = useState<Post[]>([]);
   const [editModePost, setEditModePost] = useState<Post | null>(null);
   const [newPostTitle, setNewPostTitle] = useState<string>("");
   const [newPostBody, setNewPostBody] = useState<string>("");
-  const [newComment, setNewComment] = useState<string>(""); 
+  const [newComment, setNewComment] = useState<string>("");
   const location = useLocation();
   const navigation = useNavigate();
   const currentId = location.state?.id;
@@ -27,70 +23,52 @@ const Feed: React.FC = () => {
   };
 
   useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/posts")
-      .then((response) => response.json())
-      .then((data) => {
-        const postsWithComments = data.map((post: Post) => ({
-          ...post,
-          comments: [], 
-        }));
-        setPosts(postsWithComments);
-      })
-      .catch((error) => {
-        console.error("Error fetching posts:", error);
-      });
-  }, []);
+  fetchPosts(setPosts);
+  
+  }, [])
+
 
   const createPost = () => {
-    if (!userName) {
-      alert("No user logged in ");
-      navigation("/LoginForm");
-    }
-    if (newPostTitle && newPostBody) {
-      const newPost: Post = {
-        userId: currentId,
-        id: posts.length + 1,
-        title: newPostTitle,
-        body: newPostBody,
-        comments: [], 
-      };
-      setPosts([...posts, newPost]);
-      setNewPostTitle("");
-      setNewPostBody("");
+    if (isAuthorized(userName, navigation)) {
+      if (newPostTitle && newPostBody) {
+        const newPost: Post = {
+          userId: currentId,
+          id: posts.length + 1,
+          title: newPostTitle,
+          body: newPostBody,
+          comments: [],
+        };
+        setPosts([...posts, newPost]);
+        setNewPostTitle("");
+        setNewPostBody("");
+      }
     }
   };
 
   const deletePost = (postId: number, User_Id: any) => {
-    if (!userName) {
-      alert("No user logged in ");
-      navigation("/LoginForm");
-    }
-    if (
-      User_Id === currentId ||
-      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].includes(User_Id)
-    ) {
-      const updatedPosts = posts.filter((post) => post.id !== postId);
-      setPosts(updatedPosts);
+    if (isAuthorized(userName, navigation)) {
+      if (User_Id === currentId || userId.includes(User_Id)) {
+        const updatedPosts = posts.filter((post) => post.id !== postId);
+        setPosts(updatedPosts);
+      }
     }
   };
 
   const saveEdit = (editedPost: Post) => {
-    if (!userName) {
-      alert("No user logged in ");
-      navigation("/LoginForm");
+    if (isAuthorized(userName, navigation)) {
+      const updatedPosts = posts.map((post) =>
+        post.id === editedPost.id ? editedPost : post
+      );
+      setPosts(updatedPosts);
+      setEditModePost(null);
     }
-    const updatedPosts = posts.map((post) =>
-      post.id === editedPost.id ? editedPost : post
-    );
-    setPosts(updatedPosts);
-    setEditModePost(null);
   };
 
   const addComment = (post: Post) => {
     if (newComment) {
       const updatedPost: Post = {
         ...post,
-        comments: [...post.comments, newComment], 
+        comments: [...post.comments, newComment],
       };
       const updatedPosts = posts.map((p) =>
         p.id === post.id ? updatedPost : p
@@ -105,8 +83,7 @@ const Feed: React.FC = () => {
     commentIndex: number,
     editedComment: string | null
   ) => {
-    if (editedComment !== null) {
-     
+    if (editedComment) {
       const updatedComments = post.comments.map((comment, index) =>
         index === commentIndex ? editedComment : comment
       );
