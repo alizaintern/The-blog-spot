@@ -1,4 +1,4 @@
-import Post from "types/post";
+import { Post } from "interfaces/post";
 
 export const fetchPosts = (setPosts: (posts: Post[]) => void) => {
   fetch("https://jsonplaceholder.typicode.com/posts")

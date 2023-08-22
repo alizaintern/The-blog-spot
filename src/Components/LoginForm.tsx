@@ -1,22 +1,19 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ROUTES from "constants/routes";
-import Record from "types/record";
-
+import Record from "interfaces/record";
+import { initialForm } from "constants/intialForm";
+import { Post } from "interfaces/post";
 
 interface LoginFormProps {
   records: Record[];
+ 
 }
 
-const LoginForm: React.FC<LoginFormProps> = ({ records }) => {
+const LoginForm: React.FC<LoginFormProps> = ({ records}) => {
   const navigate = useNavigate();
-  const navigate_1 = useNavigate();
-  const [formData, setFormData] = useState({
-    id: null,
-    username: "",
-    email: "",
-    password: "",
-  });
+
+  const [formData, setFormData] = useState(initialForm());
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -35,7 +32,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ records }) => {
 
     if (loggedInUser) {
       console.log("user id with :" + loggedInUser.id + "is logged in ");
-      navigate_1(ROUTES.Feed, {
+      
+      navigate(ROUTES.Feed, {
         state: { id: loggedInUser.id, name: loggedInUser.username },
       });
     } else {

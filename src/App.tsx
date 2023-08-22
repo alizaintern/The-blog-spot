@@ -4,7 +4,7 @@ import SignUpForm from "components/SignUpForm";
 import LoginForm from "components/LoginForm"; 
 import Feed from "components/Feed";
 import ROUTES from "constants/routes";
-import Record from "types/record";
+import Record from "interfaces/record";
 import "./App.css";
 
 
@@ -20,7 +20,7 @@ const App: React.FC = () => {
           element={<SignUpForm records={users} setRecords={setUsers} />}
         />
         <Route path={ROUTES.Login_Form} element={<LoginForm records={users} />} />
-        <Route path={ROUTES.Feed} element={<Feed />} />
+        <Route path={ROUTES.Feed} element={<Feed records={users} setRecords={setUsers} />} />
       </Routes>
     </BrowserRouter>
   );

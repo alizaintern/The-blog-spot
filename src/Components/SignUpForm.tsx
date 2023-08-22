@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ROUTES from "constants/routes";
-import Record from "types/record";
-
-
+import Record from "interfaces/record";
 
 interface SignUpFormProps {
   records: Record[];
@@ -41,9 +39,8 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ records, setRecords }) => {
       navigate(ROUTES.Login_Form);
       return;
     } else {
-      
       const newRecord: Record = {
-        id: new Date().getTime(), 
+        id: new Date().getTime(),
         username: formData.username,
         email: formData.email,
         password: formData.password,
@@ -92,7 +89,10 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ records, setRecords }) => {
       <button className="signup-btn" type="submit" onChange={handleSubmit}>
         Sign Up
       </button>
-      <button className="signin-btn" onClick={() => navigate(ROUTES.Login_Form)}>
+      <button
+        className="signin-btn"
+        onClick={() => navigate(ROUTES.Login_Form)}
+      >
         Login
       </button>
     </form>
