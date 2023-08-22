@@ -1,12 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-interface Record {
-  id: any;
-  username: string;
-  email: string;
-  password: string;
-}
+import ROUTES from "constants/routes";
+import Record from "interfaces/record";
 
 interface SignUpFormProps {
   records: Record[];
@@ -41,12 +36,11 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ records, setRecords }) => {
 
     if (isUsernameTaken) {
       alert("Username already exists");
-      navigate("./LoginForm");
+      navigate(ROUTES.Login_Form);
       return;
     } else {
-      //const newRecord = { ...formData};
       const newRecord: Record = {
-        id: new Date().getTime(), // Current timestamp as the ID
+        id: new Date().getTime(),
         username: formData.username,
         email: formData.email,
         password: formData.password,
@@ -54,7 +48,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ records, setRecords }) => {
       setRecords([...records, newRecord]);
       console.log(records);
       setFormData({ id: 0, username: "", email: "", password: "" });
-      navigate("./LoginForm");
+      navigate(ROUTES.Login_Form);
     }
   };
 
@@ -95,7 +89,10 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ records, setRecords }) => {
       <button className="signup-btn" type="submit" onChange={handleSubmit}>
         Sign Up
       </button>
-      <button className="signin-btn" onClick={() => navigate("./LoginForm")}>
+      <button
+        className="signin-btn"
+        onClick={() => navigate(ROUTES.Login_Form)}
+      >
         Login
       </button>
     </form>
